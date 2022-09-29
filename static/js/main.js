@@ -20,6 +20,8 @@ function draw() {
   blob.followMouse();
   blobs.ShowAllBlobs(blob)
 
+  socket.emit('mouse', {mx : mouseX, my : mouseY});
+
 
 
     
