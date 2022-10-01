@@ -19,6 +19,8 @@ function Blob(x,y,r) {
         vel.setMag(3);
         this.pos.add(vel)
 
+  
+
     }
 
     this.moveCamera =()=>{
@@ -46,6 +48,22 @@ function Blob(x,y,r) {
         }
 
     }
+
+    this.sendPosition =(message)=> {
+      
+        socket.emit(message, 
+        {
+          x : this.pos.x,
+          y : this.pos.y,
+          r : this.r
+        });
+      
+    }
+
+
+
+
+    
 
 
 }

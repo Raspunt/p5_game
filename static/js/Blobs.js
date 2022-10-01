@@ -1,9 +1,12 @@
 
 let mapSize = 2000
 
+
+
 function Blobs(countBlob,r) {
 
     this.blobs = []
+
 
     this.CreateEnemyBlobs = ()=>{
 
@@ -28,7 +31,60 @@ function Blobs(countBlob,r) {
             }
         }
 
+
+        console.log(app.listPlayers);
+        let playerBlobs = []
+
+        for(let i = 0 ; i < app.listPlayers.length;i++){
+
+            let x = app.listPlayers[i].x;
+            let y = app.listPlayers[i].y;
+            let r = app.listPlayers[i].r;
+
+            let blob = new Blob(x,y,r)
+
+            playerBlobs.push(blob)
+
+        }
+
+        for(let i = 0 ; i < playerBlobs.length;i++){
+
+
+
+                playerBlobs[i].show()
+                    
+                if (blob.eats(playerBlobs[i])){
+                    playerBlobs.splice(i,1)
+                    app.listPlayers.splice(i,1)
+
+                    socket.emit('RemovePlayer', 
+                        {
+                          player_id:i
+                        });
+
+                }
+                
+
+
+        }
+        
+
+        // for (let i = 0; i < playerList.length;i++){
+
+            
+        //     playerList[i].show();
+            
+        //     if (blob.eats(playerList[i])){
+        //         playerList.splice(i,1)
+        //     }
+            
+        // }
+
+
+
     }
+
+  
 
     this.randomLocation = ()=>{
         
@@ -37,6 +93,18 @@ function Blobs(countBlob,r) {
 
 
         return createVector(x,y)
+    }
+
+
+    this.syncAllPlayers  =()=>{
+
+        socket.emit('GetAllPlayers', 
+            {
+              x : this.pos.x,
+              y : this.pos.y,
+              r : this.r
+        });
+
     }
 
 

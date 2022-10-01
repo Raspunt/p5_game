@@ -5,17 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>follower</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
 <body>
     
+    <div id="app">
 
+        <div class="container">
 
+            
+            <div id="canvas_pos">
+                
+            </div>
+            
+            <table class="playerTable">
+                
+                <tr class="playerInfo">
+                    <td>id Players {{ listPlayers.length }}</td>
+                    <td>x кордината</td>
+                    <td>y кордината</td>
+                    <td>размер</td>
+                </tr>
+                
+                <tr class="playerInfo" :key="player" v-for="player in listPlayers">
+                <td>{{ player.id }}</td>
+                <td>{{ player.x }}</td>
+                <td>{{ player.y }}</td>
+                <td>{{ player.r }}</td>
+            </tr>
+            
+        </table>
+    
+    </div>
+        
+    </div>
 
+    
+    
     <script src="./libs/p5.min.js"></script>
     <script src="./libs/socket.io-client/dist/socket.io.js"></script>
-    <script src="./js/sv_socket.js"></script>
+    <script src="./libs/vue.min.js"></script>
+
+    <script>
+        var socket = io();
+    </script>
+
+    <script src="js/PlayerTable.js"></script>
     <script src="js/Blob.js"></script>
     <script src="js/Blobs.js"></script>
     <script src="./js/main.js"></script>
+
+
+
+
 </body>
 </html>
