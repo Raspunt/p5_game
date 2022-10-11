@@ -40,7 +40,7 @@ module.exports = function SocketHandler(io) {
         })
 
         socket.on('playerConnected', (data)=>{
-            let blob  = new Blob(socket.id,data.x,data.y,data.r);
+            let blob  = new Blob(socket.id,data.username,data.x,data.y,data.r);
             
             blobs.push(blob)
             console.log("player ready");
@@ -54,8 +54,7 @@ module.exports = function SocketHandler(io) {
             console.log(data['player_id']);
             blobs.splice(data['player_id'],1)
 
-        
-
+    
         })
 
 

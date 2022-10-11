@@ -11,7 +11,7 @@ function setup() {
   canvas.parent('canvas_pos')
   
   blob = new Blob(0,0,0,64);
-  blobs = new Blobs(1000,16)
+  blobs = new Blobs(5000,16)
   
   blobs.CreateEnemyBlobs()
 
@@ -21,7 +21,8 @@ function setup() {
 } 
 
 function draw() { 
-  background(0);
+  background(100);
+
 
   //  camera moving to the player
   blob.moveCamera();
@@ -31,7 +32,27 @@ function draw() {
     //  display player
     blob.show();
     // player move to the mouse
-    blob.followMouse();
+
+    let mapSizeWithPlayer = mapSize - blob.r/2
+    if(blob.pos.x < mapSizeWithPlayer && blob.pos.x > -mapSizeWithPlayer && blob.pos.y < mapSizeWithPlayer && blob.pos.y > -mapSizeWithPlayer){
+      blob.followMouse();
+    }else {
+      if (blob.pos.x >= 0){
+        blob.pos.x -= 1
+      }else{
+        blob.pos.x += 1
+      }
+
+      if (blob.pos.y >= 0){
+        blob.pos.y -= 1
+      }else{
+        blob.pos.y += 1
+      }
+
+    }
+
+ 
+
 
   }else{
     
@@ -44,10 +65,5 @@ function draw() {
   blob.sendPosition('playerUpdate')
 
 
-
-  
-
-
-    
 }
 

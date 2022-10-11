@@ -3,8 +3,9 @@
 
 let blobs = []
 
-function Blob(id,x,y,r){
+function Blob(id,username,x,y,r){
   this.id = id
+  this.username = username
   this.x = x;
   this.y = y
   this.r = r

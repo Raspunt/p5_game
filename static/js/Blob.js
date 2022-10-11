@@ -6,6 +6,7 @@ function Blob(id,x,y,r) {
     this.r = r
     this.id = id
     this.zoom = 1
+    this.username = ""
     
 
     this.show =()=> {
@@ -15,13 +16,18 @@ function Blob(id,x,y,r) {
 
     this.followMouse =()=>{
 
-        
         let vel = createVector(mouseX-width/2,mouseY-height/2)
         vel.setMag(3);
         this.pos.add(vel)
+        
+    }
 
-  
+    this.StepBack =()=>{
 
+        let vel = createVector(mouseX-width/2,mouseY-height/2)
+        vel.setMag(3);
+        this.pos.add(-vel)
+        
     }
 
     this.moveCamera =()=>{

@@ -11,7 +11,8 @@ const io = new Server(server);
 
 const SocketHandler = require("./socketHandler")
 const blobServer = require('./blobServer.js')
-
+const dbServer = require('./dbServer.js')
+const Router = require('./routes.js')
 
 
 
@@ -19,17 +20,17 @@ const blobServer = require('./blobServer.js')
 
 SocketHandler(io)
 blobServer.SendAllPlayers(io)
-
+dbServer.ConnectToDb()
 
 
 
 
 app.use(express.static(path.join(__dirname, 'static')))
 
-app.get('/', function (req, res) {  
-  res.sendFile(__dirname+'/public/index.html');  
-});  
 
+let r = new Router(app)
+
+r.StartListen()
 
 
 
