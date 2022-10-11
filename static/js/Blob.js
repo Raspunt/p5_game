@@ -1,9 +1,10 @@
 
 
-function Blob(x,y,r) {
+function Blob(id,x,y,r) {
 
     this.pos = createVector(x, y)
     this.r = r
+    this.id = id
     this.zoom = 1
     
 
@@ -57,6 +58,13 @@ function Blob(x,y,r) {
           y : this.pos.y,
           r : this.r
         });
+
+
+
+        socket.on("user_id", (id) => {
+            sessionStorage.setItem("user_id", id);
+        });
+        
       
     }
 

@@ -45,6 +45,8 @@ module.exports = function SocketHandler(io) {
             blobs.push(blob)
             console.log("player ready");
 
+            socket.emit("user_id", socket.id);
+
         })
 
 

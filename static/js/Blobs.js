@@ -13,7 +13,7 @@ function Blobs(countBlob,r) {
         for (let i = 0 ;i < countBlob ;i++){
             
             let pos = this.randomLocation()
-            this.blobs.push(new Blob(pos.x,pos.y,r))
+            this.blobs.push(new Blob(0,pos.x,pos.y,r))
         }
 
 
@@ -32,42 +32,50 @@ function Blobs(countBlob,r) {
         }
 
 
-        console.log(app.listPlayers);
         let playerBlobs = []
 
         for(let i = 0 ; i < app.listPlayers.length;i++){
 
+            let id = app.listPlayers[i].id; 
             let x = app.listPlayers[i].x;
             let y = app.listPlayers[i].y;
             let r = app.listPlayers[i].r;
 
-            let blob = new Blob(x,y,r)
+            let blob = new Blob(id,x,y,r)
 
             playerBlobs.push(blob)
 
         }
-
+        
         for(let i = 0 ; i < playerBlobs.length;i++){
+            
+            playerBlobs[i].show()
+
+            let userID = sessionStorage.getItem("user_id");
 
 
 
-                playerBlobs[i].show()
-                    
+            if (userID != playerBlobs[i].id){
+
                 if (blob.eats(playerBlobs[i])){
+
                     playerBlobs.splice(i,1)
                     app.listPlayers.splice(i,1)
 
                     socket.emit('RemovePlayer', 
-                        {
-                          player_id:i
-                        });
-
+                    {
+                        player_id:i
+                    });
                 }
-                
 
 
+            }
+
+            
+
+                    
         }
-        
+    
 
         // for (let i = 0; i < playerList.length;i++){
 
