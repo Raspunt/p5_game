@@ -6,4 +6,4 @@ services:
       dockerfile: ./DockerFile
     restart: unless-stopped
     ports:
-      - "8080:8000"
+      - "${SERVER_PORT}:8000"
