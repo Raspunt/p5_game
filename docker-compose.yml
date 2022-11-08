@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  server:
+    container_name: p5_game
+    build:
+      dockerfile: ./DockerFile
+    restart: unless-stopped
+    ports:
+      - "8080:8000"

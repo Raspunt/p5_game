@@ -11,7 +11,6 @@ const io = new Server(server);
 
 const SocketHandler = require("./socketHandler")
 const blobServer = require('./blobServer.js')
-const dbServer = require('./dbServer.js')
 const Router = require('./routes.js')
 
 
@@ -20,7 +19,6 @@ const Router = require('./routes.js')
 
 SocketHandler(io)
 blobServer.SendAllPlayers(io)
-dbServer.ConnectToDb()
 
 
 
