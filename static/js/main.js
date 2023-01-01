@@ -5,57 +5,56 @@ var blobs;
 
 let gameOver = false
 
-function setup() { 
+function setup() {
   let canvas = createCanvas(800, 800);
-  
+
   canvas.parent('canvas_pos')
-  
-  blob = new Blob(0,0,0,64);
-  blobs = new Blobs(5000,16)
-  
+
+  blob = new Blob(0, 0, 0, 64);
+  blobs = new Blobs(5000, 16)
+
   blobs.CreateEnemyBlobs()
 
   blob.sendPosition('playerConnected')
 
-  
-} 
 
-function draw() { 
-  background(100);
+}
 
+function draw() {
+  background(200);
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   //  camera moving to the player
   blob.moveCamera();
 
-  if (!gameOver){
-    
+  if (!gameOver) {
+
     //  display player
     blob.show();
     // player move to the mouse
 
-    let mapSizeWithPlayer = mapSize - blob.r/2
-    if(blob.pos.x < mapSizeWithPlayer && blob.pos.x > -mapSizeWithPlayer && blob.pos.y < mapSizeWithPlayer && blob.pos.y > -mapSizeWithPlayer){
+    let mapSizeWithPlayer = mapSize - blob.r / 2
+    if (blob.pos.x < mapSizeWithPlayer && blob.pos.x > -mapSizeWithPlayer && blob.pos.y < mapSizeWithPlayer && blob.pos.y > -mapSizeWithPlayer) {
       blob.followMouse();
-    }else {
-      if (blob.pos.x >= 0){
+    } else {
+      if (blob.pos.x >= 0) {
         blob.pos.x -= 1
-      }else{
+      } else {
         blob.pos.x += 1
       }
 
-      if (blob.pos.y >= 0){
+      if (blob.pos.y >= 0) {
         blob.pos.y -= 1
-      }else{
+      } else {
         blob.pos.y += 1
       }
 
     }
 
- 
+  } else {
 
-
-  }else{
-    
   }
 
   //  Parameter means who can eat blobs

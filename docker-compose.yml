@@ -2,8 +2,11 @@ version: '3.7'
 services:
   server:
     container_name: p5_game
-    build:
-      dockerfile: ./DockerFile
+    image: node:lts
     restart: unless-stopped
+    working_dir: /app
+    command: node main.js
     ports:
       - "${SERVER_PORT}:8000"
+    volumes:
+      - .:/app
