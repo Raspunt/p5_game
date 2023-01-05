@@ -1,113 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>follower</title>
 
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/modal.css">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>follower</title>
+
+  <link rel="stylesheet" href="./css/style.css">
 
 
 
 
 
 </head>
+
 <body>
-    
-    <div id="app">
 
-        <div class="container">
 
-        <button id="show-modal" @click="showModal = true">Зарестрироваться</button>
-        
-        <modal v-if="showModal" @close="showModal = false">
-            <h3 slot="header">Введите имя</h3>
-        </modal>
-            
-            <div id="canvas_pos">
-                
-            </div>
-            
-            <table class="playerTable">
-                
-                <tr class="playerInfo">
-                    <td>id Players {{ listPlayers.length }}</td>
-                    <!-- <td>x кордината</td>
-                    <td>y кордината</td> -->
-                    <td>размер</td>
-                </tr>
-                
-                <tr class="playerInfo" :key="player" v-for="player in listPlayers">
-                <td>{{ player.id }}</td>
-                <!-- <td>{{ player.x }}</td> -->
-                <!-- <td>{{ player.y }}</td> -->
-                <td>{{ player.r }}</td>
-            </tr>
-            
-        </table>
-    
-    </div>
+  <div id="canvas_pos">
+  </div>
+
+  <script src="./libs/p5.min.js"></script>
+  <script src="./libs/socket.io-client/dist/socket.io.js"></script>
 
 
 
-    <script type="text/x-template" id="modal-template">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-container">
-  
-                <div class="modal-header">
-                  <slot name="header">
-                    enter your name
-                  </slot>
-                  <input v-model="this.username" placeholder="enter your name"/>
-                </div>
-  
-              
-
-  
-                <div class="modal-footer">
-                  <slot name="footer">
-                    <><><>
-                    <button class="modal-default-button" @click="$emit('close')">
-                      OK
-                    </button>
-                  </slot>
-                </div>
-              </div>
-            </div>
-          </div>
-        </transition>
-      </script>
-        
-    </div>
-
-    
-    
-    <script src="./libs/p5.min.js"></script>
-    <script src="./libs/socket.io-client/dist/socket.io.js"></script>
-    <script src="./libs/vue.min.js"></script>
-
-    <script>
-        var socket = io();
-    </script>
+  <script src="js/socketHandler.js"></script>
+  <script src="js/Blob.js"></script>
+  <script src="js/Blobs.js"></script>
+  <script src="./js/main.js"></script>
 
 
-
- 
-
-
-      <script src="js/vueApp.js"></script>
-      <script src="js/Blob.js"></script>
-      <script src="js/Blobs.js"></script>
-      <script src="./js/main.js"></script>
-  
-  
 
 
 
 
 </body>
+
 </html>

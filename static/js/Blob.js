@@ -1,48 +1,64 @@
 
 
-function Blob(id,x,y,r) {
+function Blob(x,y,r) {
 
-    this.pos = createVector(x, y)
-    this.r = r
-    this.id = id
-    this.zoom = 1
-    this.username = ""
+    this.pos = createVector(x, y);
+    this.r = r ;
+    this.zoom = 1 ;
+    this.username = "" ;
     
 
     this.show =()=> {
-        fill(255)
-        ellipse(this.pos.x,this.pos.y,this.r)
+        fill(255);
+        ellipse(this.pos.x,this.pos.y,this.r) ;
     }
 
     this.followMouse =()=>{
+        
+        let mousePos = createVector(
+            (mouseX+this.pos.x)-width/2,
+            (mouseY+this.pos.y)-height/2
+            );
 
-        let vel = createVector(mouseX-width/2,mouseY-height/2)
-        vel.setMag(3);
-        this.pos.add(vel)
+            let d = p5.Vector.dist(mousePos, this.pos)
+            
+            if (d > this.r){
+                
+                
+            let lineVector = p5.Vector.sub(mousePos, this.pos);
+            strokeWeight(10);
+            line(this.pos.x,
+                this.pos.y,
+                this.pos.x + lineVector.x,
+                this.pos.y + lineVector.y
+                );
+            
+            let vel = createVector(mouseX-width/2,mouseY-height/2);
+            vel.setMag(3);
+            this.pos.add(vel);         
+        }
+
+
+
+
         
     }
 
-    this.StepBack =()=>{
 
-        let vel = createVector(mouseX-width/2,mouseY-height/2)
-        vel.setMag(3);
-        this.pos.add(-vel)
-        
-    }
 
     this.moveCamera =()=>{
 
-        let newzoom = 64 / this.r
-        this.zoom = lerp(this.zoom,newzoom,0.1)
+        let newzoom = 64 / this.r;
+        this.zoom = lerp(this.zoom,newzoom,0.01);
 
-        translate(width/2 , height/2)
-        scale(this.zoom)
-        translate(-this.pos.x,-this.pos.y)
+        translate(width/2 , height/2);
+        scale(this.zoom);
+        translate(-this.pos.x,-this.pos.y);
     }
 
     this.eats =(outher)=>{
 
-        let d = p5.Vector.dist(this.pos,outher.pos)
+        let d = p5.Vector.dist(this.pos,outher.pos);
         if (d < this.r/2 + outher.r/2){
 
             let sum = PI * this.r * this.r + PI * outher.r * outher.r
@@ -65,19 +81,33 @@ function Blob(id,x,y,r) {
           r : this.r
         });
 
+    }
 
 
-        socket.on("user_id", (id) => {
-            sessionStorage.setItem("user_id", id);
-        });
-        
-      
+    this.showUsername =()=>{
+        fill(0);
+        text('word', this.pos.x, this.pos.y+(this.r/2));
+        textSize(30);
+    }
+
+
+    this.StepBack =()=>{
+
+        if (this.pos.x >= 0){
+            this.pos.x -= 1
+          }else{
+            this.pos.x += 1
+          }
+    
+          if (this.pos.y >= 0){
+            this.pos.y -= 1
+          }else{
+            this.pos.y += 1
+        }
     }
 
 
 
-
-    
 
 
 }

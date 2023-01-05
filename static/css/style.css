@@ -1,26 +1,19 @@
 
-
-
 .playerInfo{
-
    padding: 10px;
-
-
 }
-
 
 table {
     border: solid;
     height: auto;
 }
 
-
-
-
-
 td{ 
     margin: 10px;
     text-align: center;
 }
 
-
+body,html {
+    margin:0;
+    padding: 0;
+}

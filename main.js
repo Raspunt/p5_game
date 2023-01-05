@@ -11,29 +11,15 @@ const io = new Server(server);
 
 const SocketHandler = require("./socketHandler")
 const blobServer = require('./blobServer.js')
-const dbServer = require('./dbServer.js')
 const Router = require('./routes.js')
 
-
-
-
-
 SocketHandler(io)
-blobServer.SendAllPlayers(io)
-dbServer.ConnectToDb()
-
-
-
 
 app.use(express.static(path.join(__dirname, 'static')))
 
-
 let r = new Router(app)
-
 r.StartListen()
 
-
-
-server.listen(8000, () => {
-  console.log('listening on *8000');
+server.listen(8080, () => {
+  console.log('listening on *8080');
 });

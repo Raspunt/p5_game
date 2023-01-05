@@ -1,6 +1,5 @@
 
-let mapSize = 2000
-
+let mapSize = 500
 
 
 function Blobs(countBlob,r) {
@@ -9,112 +8,90 @@ function Blobs(countBlob,r) {
 
 
     this.CreateEnemyBlobs = ()=>{
-
+        
         for (let i = 0 ;i < countBlob ;i++){
-            
             let pos = this.randomLocation()
-            this.blobs.push(new Blob(0,pos.x,pos.y,r))
-        }
-
-
-         
+            this.blobs.push(new Blob(pos.x,pos.y,r))
+        }   
     }
 
 
-    this.ShowAllBlobs =(blob)=>{
+    this.ShowAllBlobs =(player)=>{
 
+
+        // eating blobs
         for (let i = 0; i < this.blobs.length; i++){
             this.blobs[i].show();
 
-            if (blob.eats(this.blobs[i])){
+            strokeWeight(5);
+
+            if (player.eats(this.blobs[i])){
                 this.blobs.splice(i,1)
             }
         }
 
+        // player blobs
+        for(let i = 0 ; i < listPlayers.length;i++){
 
-        let playerBlobs = []
-
-        for(let i = 0 ; i < app.listPlayers.length;i++){
-
-            let id = app.listPlayers[i].id; 
-            let x = app.listPlayers[i].x;
-            let y = app.listPlayers[i].y;
-            let r = app.listPlayers[i].r;
-
-            let blob = new Blob(id,x,y,r)
-
-            playerBlobs.push(blob)
-
-        }
         
-        for(let i = 0 ; i < playerBlobs.length;i++){
-            
-            playerBlobs[i].show()
+            let x =  listPlayers[i].x;
+            let y =  listPlayers[i].y;
+            let r =  listPlayers[i].r;
 
-            let userID = sessionStorage.getItem("user_id");
-
-
-
-            if (userID != playerBlobs[i].id){
-
-                if (blob.eats(playerBlobs[i])){
-
-                    playerBlobs.splice(i,1)
-                    app.listPlayers.splice(i,1)
-
-                    socket.emit('RemovePlayer', 
-                    {
-                        player_id:i
-                    });
-                }
+            let blob = new Blob(x,y,r)
 
 
-            }
+            // if (listPlayers[i].id !== socket.id){
+   
+            //     if (player.eats(blob)){
+            //         listPlayers.splice(i,1)
+            //     }                
+            // }
+            blob.show()
+            blob.showUsername()
 
-            
-
-                    
         }
-    
-
-        // for (let i = 0; i < playerList.length;i++){
-
-            
-        //     playerList[i].show();
-            
-        //     if (blob.eats(playerList[i])){
-        //         playerList.splice(i,1)
-        //     }
-            
-        // }
-
-
-
     }
 
-  
 
     this.randomLocation = ()=>{
         
         let x = random(-mapSize,mapSize)
         let y = random(-mapSize,mapSize)
 
-
         return createVector(x,y)
     }
 
 
-    this.syncAllPlayers  =()=>{
+    this.ISPlayerInsideMap =(blob)=>{
 
-        socket.emit('GetAllPlayers', 
-            {
-              x : this.pos.x,
-              y : this.pos.y,
-              r : this.r
-        });
+        let mapSizeWithPlayer = mapSize - blob.r/2
 
+        if(blob.pos.x < mapSizeWithPlayer && blob.pos.x > -mapSizeWithPlayer && blob.pos.y < mapSizeWithPlayer && blob.pos.y > -mapSizeWithPlayer){
+          return true ;
+        }else{
+          return false ;
+        }
+  
+    
     }
 
+
+    this.drawBordersOfMap =()=>{
+        // botton line
+        line(-mapSize, mapSize, mapSize,mapSize);
+        
+        // // left line
+        line(-mapSize, -mapSize, -mapSize, mapSize);
+
+        // right line
+        line(mapSize, mapSize, mapSize, -mapSize);
+
+        // top line
+        line(mapSize, -mapSize,-mapSize, -mapSize);
+        
+        strokeWeight(5);
+    }
 
 
 

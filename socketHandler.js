@@ -2,8 +2,8 @@
 const blobServer = require('./blobServer.js')
 
 
-let blobs = blobServer.blobs
-let Blob = blobServer.Blob
+let playerBlobs = blobServer.playerBlobs
+let PlayerBlob = blobServer.PlayerBlob
 
 
 module.exports = function SocketHandler(io) {
@@ -16,72 +16,61 @@ module.exports = function SocketHandler(io) {
 
             try {
 
-                
                 let blob;
-                for(let i = 0; i < blobs.length;i++ ){
-                    if (blobs[i].id === socket.id){
-                        blob = blobs[i]
-                        
+                for(let i = 0; i < playerBlobs.length;i++ ){
+                    if (playerBlobs[i].ip === socket.handshake.address){
+                        blob = playerBlobs[i]
                     }
-                }
-                
+                }                
                 blob.x = data.x
                 blob.y = data.y
                 blob.r = data.r
             
-            } catch(error){
-            }
+            }catch(error){}
 
             // console.log(blobs);
+
+            io.emit('ListPlayers',playerBlobs);
          
-      
-          
-        
         })
 
         socket.on('playerConnected', (data)=>{
-            let blob  = new Blob(socket.id,data.username,data.x,data.y,data.r);
+            let player  = new PlayerBlob(
+                socket.id,
+                socket.handshake.address,
+                data.username,
+                data.x,
+                data.y,
+                data.r
+            );
+
+            if(ArrayConstainsIp(playerBlobs,socket.handshake.address) === undefined){                
+                playerBlobs.push(player)
+                console.log("player ready");
+            }
+        })
+
             
-            blobs.push(blob)
-            console.log("player ready");
-
-            socket.emit("user_id", socket.id);
-
-        })
-
-
-        socket.on('RemovePlayer',(data)=>{
-            console.log(data['player_id']);
-            blobs.splice(data['player_id'],1)
-
-    
+        socket.on("disconnect",(socket)=>{
+            console.log("user disconect");
         })
 
 
 
-        
-        
+
         console.log(`user connected id=${socket.id}`);
-        io.emit("User connect hooray");
     });
 
-
-    io.on("disconnect",(socket)=>{
-
-
-        for(let i = 0; i < blobs.length;i++ ){
-            if (blobs[i].id === socket.id){
-                blobs[i].splise(0,1)
-                
-            }
-        }
-        console.log("user disconect");
-        
+}
 
 
-    })
 
 
+function ArrayConstainsIp(arr,ip){
+
+    for(let i=0; i<arr.length; i++){
+        if(arr[i].ip === ip)return true ;
+    }
 
 }
 
