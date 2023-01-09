@@ -16,13 +16,10 @@ module.exports = class Router{
             res.sendFile(__dirname+'/public/index.html');  
         });  
 
-        this.app.get('/Stats', function (req, res) {  
-            res.sendFile(__dirname+'/public/stats.html');  
+        this.app.get('/login', function (req, res) {  
+            res.sendFile(__dirname+'/public/login.html');  
         });  
 
-        this.app.get('/Profile', function (req, res) {  
-            res.sendFile(__dirname+'/public/profile.html');  
-        });  
         
 
         

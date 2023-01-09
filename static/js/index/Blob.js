@@ -6,6 +6,7 @@ function Blob(x,y,r) {
     this.r = r ;
     this.zoom = 1 ;
     this.username = "" ;
+    this.ip = "";
     
 
     this.show =()=> {
@@ -22,7 +23,7 @@ function Blob(x,y,r) {
 
             let d = p5.Vector.dist(mousePos, this.pos)
             
-            if (d > this.r){
+            if (d > this.r/2){
                 
                 
             let lineVector = p5.Vector.sub(mousePos, this.pos);
@@ -72,10 +73,42 @@ function Blob(x,y,r) {
 
     }
 
+    this.eatsPlayer =(outher)=>{
+
+        // console.log(outher.ip,window.location.hostname);
+
+
+        // console.log(outher);
+
+        
+
+        let d = p5.Vector.dist(this.pos,outher.pos);
+        if (d < this.r/2 + outher.r/2){
+
+
+            
+            // if (outher.ip.includes(window.location.hostname) !== true){
+    
+                // let sum = PI * this.r * this.r + PI * outher.r * outher.r
+                // this.r = sqrt(sum/PI)
+
+                // socket.emit('RemovePlayer',outher.ip)
+                // console.log(true);
+            
+            // }
+
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     this.sendPosition =(message)=> {
-      
+        
         socket.emit(message, 
         {
+          username : this.username,
           x : this.pos.x,
           y : this.pos.y,
           r : this.r
@@ -84,9 +117,9 @@ function Blob(x,y,r) {
     }
 
 
-    this.showUsername =()=>{
+    this.showUsername =(username)=>{
         fill(0);
-        text('word', this.pos.x, this.pos.y+(this.r/2));
+        text(username, this.pos.x, this.pos.y+(this.r/2));
         textSize(30);
     }
 

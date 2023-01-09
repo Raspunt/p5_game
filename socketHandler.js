@@ -21,15 +21,17 @@ module.exports = function SocketHandler(io) {
                     if (playerBlobs[i].ip === socket.handshake.address){
                         blob = playerBlobs[i]
                     }
-                }                
-                blob.x = data.x
-                blob.y = data.y
-                blob.r = data.r
+                }        
+                
+                blob.username = data.username ;
+                blob.x = data.x ;
+                blob.y = data.y ;
+                blob.r = data.r ;
+
             
             }catch(error){}
 
             // console.log(blobs);
-
             io.emit('ListPlayers',playerBlobs);
          
         })
@@ -48,6 +50,11 @@ module.exports = function SocketHandler(io) {
                 playerBlobs.push(player)
                 console.log("player ready");
             }
+        })
+
+
+        socket.on('RemovePlayer',(ip)=>{
+            removePlayerByIp(ip)
         })
 
             
@@ -73,5 +80,14 @@ function ArrayConstainsIp(arr,ip){
     }
 
 }
+
+function removePlayerByIp(ip){
+
+    for(let i=0; i<playerBlobs.length; i++){
+        if(playerBlobs[i].ip.includes(ip))return playerBlobs.splice(i,1) ;
+    }
+
+}
+
 
     

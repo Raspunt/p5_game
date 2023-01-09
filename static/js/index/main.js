@@ -4,6 +4,7 @@ var player;
 var blobs;
 
 let gameOver = false
+let username = localStorage.getItem('username');
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight - 10);
@@ -12,11 +13,21 @@ function setup() {
 
 
   player = new Blob(0, 0, 64);
-  blobs = new Blobs(10, 16);
+  blobs = new Blobs(500, 15);
 
-  
   blobs.CreateEnemyBlobs();
-  player.sendPosition('playerConnected');
+
+  if (username != null){
+
+    player.username = username;
+    player.sendPosition('playerConnected');
+
+  }else {
+    window.location.href ='/login'
+  } 
+
+
+
   
   
   

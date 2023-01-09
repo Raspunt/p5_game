@@ -1,5 +1,5 @@
 
-let mapSize = 500
+let mapSize = 1000
 
 
 function Blobs(countBlob,r) {
@@ -20,35 +20,41 @@ function Blobs(countBlob,r) {
 
 
         // eating blobs
-        for (let i = 0; i < this.blobs.length; i++){
-            this.blobs[i].show();
+        // for (let i = 0; i < this.blobs.length; i++){
+        //     this.blobs[i].show();
 
-            strokeWeight(5);
+        //     strokeWeight(5);
 
-            if (player.eats(this.blobs[i])){
-                this.blobs.splice(i,1)
-            }
-        }
+        //     if (player.eats(this.blobs[i])){
+        //         this.blobs.splice(i,1)
+        //     }
+        // }
 
         // player blobs
         for(let i = 0 ; i < listPlayers.length;i++){
 
-        
+            let username = listPlayers[i].username;
+            let ip = listPlayers[i].ip;
             let x =  listPlayers[i].x;
             let y =  listPlayers[i].y;
             let r =  listPlayers[i].r;
 
-            let blob = new Blob(x,y,r)
+            let blob = new Blob(x,y,r);
+            blob.ip = ip;
+            
+            
+            console.log(window.location.hostname.includes(blob.ip));
+            // console.log(player.eatsPlayer(blob));
 
-
-            // if (listPlayers[i].id !== socket.id){
+            // if (listPlayers[i].ip.includes(window.location.hostname) !== true){
    
             //     if (player.eats(blob)){
             //         listPlayers.splice(i,1)
             //     }                
             // }
+
             blob.show()
-            blob.showUsername()
+            blob.showUsername(username)
 
         }
     }
